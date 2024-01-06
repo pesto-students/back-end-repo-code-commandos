@@ -9,7 +9,7 @@ const socketID = require("socket.io");
 
 const io = socketID(server, {
 	cors: {
-		origin: process.env.ORIGIN,
+		origin: "https://matchmade.onrender.com",
 		credentials: true,
 	},
 });
@@ -32,7 +32,7 @@ require("dotenv").config();
 app.use(cookieParser());
 app.use(
 	cors({
-		origin: process.env.ORIGIN,
+		origin: "https://matchmade.onrender.com",
 		credentials: true,
 	})
 );
