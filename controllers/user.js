@@ -17,11 +17,11 @@ exports.findUser = async (req, res) => {
 };
 exports.astroDataSearch = async (req, res) => {
   const { signs, userId } = req.body;
-  console.log(signs);
+
   let newArray = [];
   await User.findOne({ _id:userId }).then(async (response) => {
     newArray = [signs,response.horoscope]
-    console.log(newArray)
+
     await Astro.findOne({
       signs: {$in:[...newArray]},
     })
@@ -47,13 +47,10 @@ exports.astroDataInsert = async (req, res) => {
 
 const findUsers = async (id) => {
   let result = {};
-  // console.log(id);
 
   await User.findById(id)
     .then((response) => (result = response.toJSON()))
     .catch((error) => error);
-
-  // console.log(result);
   return result;
 };
 
@@ -62,18 +59,15 @@ const generateToken = (user) => {
 };
 
 const isMonthInRange = (startMonth, endMonth, targetDate) => {
-  // Extract months from the provided strings
-  const start = new Date(`2000-${startMonth}`); // Using a common year (e.g., 2000)
+  const start = new Date(`2000-${startMonth}`); 
   const end = new Date(`2000-${endMonth}`);
   const target = new Date(`2000-${targetDate}`);
 
-  // Check if the target month is within the range
   return target >= start && target <= end;
 };
 
 exports.createUser = async (req, res, next) => {
-  // console.log("Response from the FE: " + req.body.P1Dob);
-  console.log(req.body);
+  
   const { phone, gender, email, password } = req.body;
 
   const user = await User.findOne({ phone });
@@ -150,10 +144,6 @@ exports.loginUser = async (req, res, next) => {
 
     next();
   });
-  // const auth = await bcrypt.compare(password, user.password);
-  // if (!auth) {
-  // 	res.json({ message: "Incorrect password or email" });
-  // }
 };
 
 exports.updateUser = async (req, res) => {
@@ -337,286 +327,7 @@ exports.findMatch = async (req, res) => {
     .then(async (response) => {
       console.log(response[0]);
       const lookingFor = response[0].gender == "male" ? "female" : "male";
-      // const pipeline = [
-      //   {
-      //     $match: {
-      //       $or: [
-      //         {
 
-      //             $eq: [response[0].age, response[0].partnerPreference.ageRange]
-
-      //         },
-      //         {
-
-      //             $eq: [response[0].maritialStatus, response[0].partnerPreference.maritialPreference]
-
-      //         },
-      //         {
-
-      //             $eq: [response[0].diet, response[0].partnerPreference.partnerDiet]
-
-      //         },
-      //         {
-
-      //             $eq: [response[0].city, response[0].partnerPreference.partnerCity]
-
-      //         },
-      //         {
-
-      //             $eq: [response[0].state, response[0].partnerPreference.partnerState]
-
-      //         },
-      //         {
-
-      //             $eq: [response[0].religion, response[0].partnerPreference.partnerReligion]
-
-      //         },
-      //         {
-
-      //             $eq: [response[0].community, response[0].partnerPreference.partnerCommunity]
-
-      //         },
-      //         {
-
-      //             $eq: [response[0].familyType, response[0].partnerPreference.partnerFamilyType]
-
-      //         },
-      //         {
-
-      //             $eq: [response[0].qualification, response[0].partnerPreference.partnerQualification]
-
-      //         },
-      //         {
-
-      //             $eq: [response[0].profession, response[0].partnerPreference.partnerProfession]
-
-      //         },
-      //         {
-
-      //             $eq: [response[0].annualIncome, response[0].partnerPreference.partnerAnnualIncome]
-
-      //         },
-      //       ],
-      //       // $in: [response[0].hobby, ["Biking", "Dancing"]] ,
-      //     },
-      //   },
-      //   {
-      //     $project: {
-      //       _id: 1, // Include the partner's ID in the result
-      //       score: {
-      //         $add: [
-      //           // Calculate scores for the 11 parameters
-      //           {
-      //             $cond: [
-      //               {
-
-      //                   $:[response[0].age, response[0].partnerPreference.ageRange],
-
-      //               },
-      //               10,
-      //               0,
-      //             ],
-      //           },
-      //           {
-      //             $cond: [
-      //               {
-
-      //                   $:[response[0].maritialStatus, response[0].partnerPreference.maritialPreference],
-
-      //               },
-      //               10,
-      //               0,
-      //             ],
-      //           },
-      //           {
-      //             $cond: [
-      //               {
-
-      //                   $:[response[0].diet, response[0].partnerPreference.partnerDiet],
-
-      //               },
-      //               10,
-      //               0,
-      //             ],
-      //           },
-      //           {
-      //             $cond: [
-      //               {
-
-      //                   $:[response[0].city, response[0].partnerPreference.partnerCity],
-
-      //               },
-      //               10,
-      //               0,
-      //             ],
-      //           },
-      //           {
-      //             $cond: [
-      //               {
-
-      //                   $:[response[0].state, response[0].partnerPreference.partnerState],
-
-      //               },
-      //               10,
-      //               0,
-      //             ],
-      //           },
-      //           {
-      //             $cond: [
-      //               {
-
-      //                   $:[response[0].religion, response[0].partnerPreference.partnerReligion],
-
-      //               },
-      //               10,
-      //               0,
-      //             ],
-      //           },
-      //           {
-      //             $cond: [
-      //               {
-
-      //                   $:[response[0].community, response[0].partnerPreference.partnerCommunity],
-
-      //               },
-      //               10,
-      //               0,
-      //             ],
-      //           },
-      //           {
-      //             $cond: [
-      //               {
-
-      //                   $:[response[0].familyType, response[0].partnerPreference.partnerFamilyType],
-
-      //               },
-      //               10,
-      //               0,
-      //             ],
-      //           },
-      //           {
-      //             $cond: [
-      //               {
-
-      //                   $:[response[0].qualification, response[0].partnerPreference.partnerQualification],
-
-      //               },
-      //               10,
-      //               0,
-      //             ],
-      //           },
-      //           {
-      //             $cond: [
-      //               {
-
-      //                   $:[response[0].profession, response[0].partnerPreference.partnerProfession],
-
-      //               },
-      //               10,
-      //               0,
-      //             ],
-      //           },
-      //           {
-      //             $cond: [
-      //               {
-
-      //                   $:[response[0].annualIncome, response[0].partnerPreference.partnerAnnualIncome],
-
-      //               },
-      //               10,
-      //               0,
-      //             ],
-      //           },
-      //           // { $cond: [{ $eq: ['$partnerPreference.param1', userPreferences.param1] }, 10, 0] },
-      //           // { $cond: [{ $eq: ['$partnerPreference.param2', userPreferences.param2] }, 10, 0] },
-      //           // ... (other 9 parameters)
-      //           // Calculate score for the hobby parameter (up to 10 points)
-      //           // {
-      //           //   $cond: [
-      //           //     {
-      //           //       "partnerPreference.hobby": {
-      //           //         $in: response[0].hobby,
-      //           //       },
-      //           //     },
-      //           //     10,
-      //           //     0,
-      //           //   ],
-      //           // },
-      //         ],
-      //       },
-      //     },
-      //   },
-      //   {
-      //     $sort: { score: -1 }, // Sort by score in descending order
-      //   },
-      // ];
-
-      //
-
-      // await User.find(
-      //   {
-      //     $or: [
-      //       {
-      //         "partnerPreference.ageRange": {
-      //           $in: response[0].partnerPreference.ageRange,
-      //         },
-      //       },
-      //       {
-      //         "partnerPreference.maritialPreference": {
-      //           $in: response[0].partnerPreference.maritialPreference,
-      //         },
-      //       },
-      //       {
-      //         "partnerPreference.partnerDiet": {
-      //           $in: response[0].partnerPreference.partnerDiet,
-      //         },
-      //       },
-      //       {
-      //         "partnerPreference.partnerCity": {
-      //           $in: response[0].partnerPreference.partnerCity,
-      //         },
-      //       },
-      //       {
-      //         "partnerPreference.partnerState": {
-      //           $in: response[0].partnerPreference.partnerState,
-      //         },
-      //       },
-      //       {
-      //         "partnerPreference.partnerReligion": {
-      //           $in: response[0].partnerPreference.partnerReligion,
-      //         },
-      //       },
-      //       {
-      //         "partnerPreference.partnerCommunity": {
-      //           $in: response[0].partnerPreference.partnerCommunity,
-      //         },
-      //       },
-      //       {
-      //         "partnerPreference.partnerFamilyType": {
-      //           $in: response[0].partnerPreference.partnerFamilyType,
-      //         },
-      //       },
-      //       {
-      //         "partnerPreference.partnerQualification": {
-      //           $in: response[0].partnerPreference.partnerQualification,
-      //         },
-      //       },
-      //       {
-      //         "partnerPreference.partnerProfession": {
-      //           $in: response[0].partnerPreference.partnerProfession,
-      //         },
-      //       },
-      //       {
-      //         "partnerPreference.partnerAnnualIncome": {
-      //           $in: response[0].partnerPreference.partnerAnnualIncome,
-      //         },
-      //       },
-      //     ],
-      //     'hobby': { $in: ["Biking","Dancing"] }
-      //   },
-      // )
-
-      // await User.aggregate(pipeline)
       User.aggregate([
         {
           $match: {
@@ -942,8 +653,6 @@ exports.findMatch = async (req, res) => {
       ])
 
         .then((result) => {
-          // console.log(result);
-          // Add filtering to the result data for Match-Meter
           res.send({ message: result, currentUser: response, error: false });
         })
         .catch((error) => res.send({ message: error, error: true }));
@@ -970,8 +679,6 @@ exports.setFavourites = async (req, res) => {
     .catch((error) => {
       res.send({ message: error, error: true });
     });
-
-  // if(favs) {return res.send({ message: "Already set to favourites", error: false })};
 };
 
 exports.favourites = (req, res) => {

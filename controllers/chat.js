@@ -3,13 +3,11 @@ const User = require("../models/user.model");
 
 const findUsers = async (id) => {
   let result = {};
-  // console.log(id);
 
   await User.findById(id,{firstName:1,lastName:1})
     .then((response) => (result = response.toJSON()))
     .catch((error) => error);
 
-  // console.log(result);
   return result;
 };
 exports.createChat = async (req, res) => {

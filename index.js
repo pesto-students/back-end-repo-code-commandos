@@ -51,11 +51,6 @@ io.on("connection", (socket) => {
   console.log(socket.id);
   socket.on("get-id", (Id) => {
     console.log("IDs " + Id.chatId);
-    // await Message.find({ chatId: Id.chatId })
-    //       .then((result) =>
-    //         socket.emit("connection-id", { id: chatId, result: result })
-    //       )
-    //       .catch((error) => console.log(error));
   });
 
   socket.on("message", (newMessage) => {
