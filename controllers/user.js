@@ -137,7 +137,7 @@ exports.loginUser = async (req, res, next) => {
 		response.password = null;
 		response.partnerPreference = null;
 		response._id = null;
-		response.token = token;
+		response["token"] = token;
 
 		res.status(200).json({
 			message: response,
