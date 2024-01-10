@@ -535,25 +535,35 @@ exports.findMatch = async (req, res) => {
 							],
 						},
 						partnerHobby: {
-							$sum: {
-								$map: {
-									input: "$hobby",
-									as: "hobby",
-									in: {
-										$cond: [
-											{
-												$in: [
-													"$$hobby",
-													response[0].hobby,
-												],
-											},
-											10,
-											0,
-										],
-									},
+							$cond: [
+								{
+									$in: ["$hobby", response[0].hobby],
 								},
-							},
+								10,
+								0,
+							],
 						},
+
+						// partnerHobby: {
+						// 	$sum: {
+						// 		$map: {
+						// 			input: "$hobby",
+						// 			as: "hobby",
+						// 			in: {
+						// 				$cond: [
+						// 					{
+						// 						$in: [
+						// 							"$$hobby",
+						// 							response[0].hobby,
+						// 						],
+						// 					},
+						// 					10,
+						// 					0,
+						// 				],
+						// 			},
+						// 		},
+						// 	},
+						// },
 						totalScore: {
 							$add: [
 								{
