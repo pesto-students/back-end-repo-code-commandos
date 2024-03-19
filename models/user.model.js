@@ -5,7 +5,7 @@ const user = mongoose.Schema(
 		phone: Number,
 		gender: String,
 		email: String,
-		password:String,
+		password: String,
 		firstName: String,
 		lastName: String,
 		age: String,
@@ -42,14 +42,13 @@ const user = mongoose.Schema(
 			partnerProfession: Array,
 			partnerAnnualIncome: Array,
 		},
-    profilePicture: String,
-    profileEmail: String,
-    profileDescription: String,
+		profilePicture: String,
+		profileEmail: String,
+		profileDescription: String,
 	},
 	{
 		timestamps: true,
 	}
 );
-
 
 module.exports = mongoose.model("User", user);
