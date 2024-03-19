@@ -66,7 +66,7 @@ io.on("connection", (socket) => {
 	socket.join(cred.token);
 	socket.on("message", (newMessage) => {
 		socket.to(cred.token).emit("message", newMessage);
-		console.log("Receiver message:" + newMessage.texts);
+		console.log("Receiver message:" + newMessage.text);
 		createMessage(newMessage);
 	});
 });
