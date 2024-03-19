@@ -12,6 +12,7 @@ const { Server } = require("socket.io");
 const io = new Server(server, {
 	cors: {
 		origin: "https://matchmade.onrender.com",
+		credentials: true,
 	},
 });
 
@@ -84,6 +85,6 @@ const createMessage = async (message) => {
 			console.log(error);
 		});
 };
-server.listen(process.env.PORT, () =>
+app.listen(process.env.PORT, () =>
 	console.log(`Listening on port ${process.env.PORT}...`)
 );
