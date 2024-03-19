@@ -59,14 +59,12 @@ io.use((socket, next) => {
 });
 
 io.on("connection", (socket) => {
-	socket.on("get-id", (Id) => {
-		console.log("IDs " + Id.chatId);
-	});
-
+	socket.emit("welcome", `SOCKET ID :  ${socket.id}`);
 	socket.join(cred.token);
+
 	socket.on("message", (newMessage) => {
-		socket.to(cred.token).emit("message", newMessage);
-		console.log("Receiver message:" + newMessage.text);
+		socket.to(cred.token).emit("s-message", newMessage);
+		console.log("Receiver message:" + newMessage.texts);
 		createMessage(newMessage);
 	});
 });
