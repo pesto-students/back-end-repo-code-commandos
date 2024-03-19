@@ -6,13 +6,12 @@ const app = express();
 const cookieParser = require("cookie-parser");
 
 const server = http.createServer(app);
-const socketID = require("socket.io");
+// const socketID = require("socket.io");
+const { Server } = require("socket.io");
 
-const io = socketID(server, {
+const io = new Server(server, {
 	cors: {
 		origin: "https://matchmade.onrender.com",
-		// origin: "*",
-		credentials: true,
 	},
 });
 
