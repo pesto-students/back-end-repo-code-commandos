@@ -12,6 +12,7 @@ const { Server } = require("socket.io");
 const io = new Server(server, {
 	cors: {
 		origin: "*",
+		credentials: true,
 	},
 });
 
@@ -58,6 +59,7 @@ io.use((socket, next) => {
 });
 
 io.on("connection", (socket) => {
+	console.log(`Server is ready to connect...`);
 	socket.emit("welcome", `SOCKET ID :  ${socket.id}`);
 	socket.join(cred.token);
 
