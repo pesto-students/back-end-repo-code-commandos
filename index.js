@@ -9,7 +9,7 @@ const server = http.createServer(app);
 // const socketID = require("socket.io");
 const { Server } = require("socket.io");
 
-const io = new Server(server, {
+const io = new Server(10001, {
 	cors: {
 		origin: "*",
 	},
