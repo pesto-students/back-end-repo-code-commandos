@@ -71,12 +71,12 @@ io.on("connection", (socket) => {
 });
 
 const createMessage = async (message) => {
-	const { chatId, senderid, text } = message;
-	console.log(chatId, senderid, text);
+	const { chatId, senderId, text } = message;
+	console.log(chatId, senderId, text);
 
 	await Message.create({
 		chatId: chatId,
-		senderId: senderid,
+		senderId: senderId,
 		text: text,
 	})
 		.then((response) => {
