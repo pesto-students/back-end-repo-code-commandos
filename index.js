@@ -65,19 +65,19 @@ io.on("connection", (socket) => {
 
 	socket.on("message", (newMessage) => {
 		socket.to(cred.token).emit("s-message", newMessage);
-		console.log("Receiver message:" + newMessage.texts);
+		console.log("Receiver message:" + newMessage.text);
 		createMessage(newMessage);
 	});
 });
 
 const createMessage = async (message) => {
-	const { chatId, senderid, texts } = message;
-	console.log(chatId, senderid, texts);
+	const { chatId, senderid, text } = message;
+	console.log(chatId, senderid, text);
 
 	await Message.create({
 		chatId: chatId,
 		senderId: senderid,
-		text: texts,
+		text: text,
 	})
 		.then((response) => {
 			console.log(response);
