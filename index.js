@@ -9,7 +9,7 @@ const server = http.createServer(app);
 // const socketID = require("socket.io");
 const { Server } = require("socket.io");
 
-const io = new Server(10001, {
+const io = new Server(server, {
 	cors: {
 		origin: "*",
 	},
@@ -84,6 +84,6 @@ const createMessage = async (message) => {
 			console.log(error);
 		});
 };
-app.listen(process.env.PORT, () =>
+server.listen(process.env.PORT, () =>
 	console.log(`Listening on port ${process.env.PORT}...`)
 );
